@@ -1,0 +1,36 @@
+name: Actions Test
+
+on:
+  push:
+    branches:
+      - dev-*
+
+jobs:
+  readily_test:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      MARIADB_ROOT_PASSWORD: ${{secrets.MARIADB_ROOT_PASSWORD}}
+      MARIADB_DATABASE: ${{secrets.MARIADB_DATABASE}}
+      MARIADB_WEB_USER: ${{secrets.MARIADB_WEB_USER}}
+      MARIADB_WEB_PASSWORD: ${{secrets.MARIADB_WEB_PASSWORD}}
+      MARIADB_API_USER: ${{secrets.MARIADB_API_USER}}
+      MARIADB_API_PASSWORD: ${{secrets.MARIADB_API_PASSWORD}}
+      MARIADB_DEL_USER: ${{secrets.MARIADB_DEL_USER}}
+      MARIADB_DEL_PASSWORD: ${{secrets.MARIADB_DEL_PASSWORD}}
+      MARIADB_PORT: ${{secrets.MARIADB_PORT}}
+      MARIADB_CON_LIM: ${{secrets.MARIADB_CON_LIM}}
+      MARIADB_HOST: ${{secrets.MARIADB_HOST}}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Shutdown MariaDB
+        run: sudo service mysql stop
+
+      - name: Run docker-compose
+        shell: bash
+        run: |
+          touch .env
+          docker-compose -v
+          docker-compose up --build --abort-on-container-exit
+        working-directory: ./

@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:10.7
+    container_name: readily_mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_WEB_USER}
+      - MARIADB_PASSWORD=${MARIADB_WEB_PASSWORD}
+      - MARIADB_API_USER=${MARIADB_API_USER}
+      - MARIADB_API_PASSWORD=${MARIADB_API_PASSWORD}
+
+    tty: true
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      # - ./volume/mariadb:/var/lib/mysql
+    ports:
+      - ${MARIADB_PORT}:${MARIADB_PORT}

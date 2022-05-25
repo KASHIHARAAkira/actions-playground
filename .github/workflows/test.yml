@@ -34,6 +34,6 @@ jobs:
         working-directory: ./
 
       - name: Wait Database
-        run: docker-compose up run wait mariadb:3306 -- echo "Database is up"
+        run: docker-compose run wait mariadb:3306 -- echo "Database is up"
       - name: Run Tests
-        run: docker-compose up run web ./test.sh
+        run: docker-compose run web ./test.sh

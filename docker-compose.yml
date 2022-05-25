@@ -14,8 +14,6 @@ services:
     tty: true
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
-    ports:
-      - ${MARIADB_PORT}:${MARIADB_PORT}
     networks:
       - datastream
     healthcheck:

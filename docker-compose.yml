@@ -2,7 +2,7 @@ version: '3'
 services:
   mariadb:
     image: mariadb:10.7
-    container_name: readily_mariadb
+    container_name: sandbag_mariadb
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_DATABASE=${MARIADB_DATABASE}
@@ -15,8 +15,6 @@ services:
       - ./sql:/docker-entrypoint-initdb.d
     ports:
       - ${MARIADB_PORT}:${MARIADB_PORT}
-    depends_on:
-      - web
     networks:
       - datastream
   web:
@@ -27,8 +25,8 @@ services:
       dockerfile: "Dockerfile"
     ports:
       - ${WEB_PORT}:${WEB_PORT}
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     command: ["sh", "./wait-for-db-container.sh"]
     volumes:
       - ./volume/log/web:/usr/src/logger/web

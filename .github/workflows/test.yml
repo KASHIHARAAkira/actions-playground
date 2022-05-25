@@ -6,7 +6,7 @@ on:
       - dev-*
 
 jobs:
-  readily_test:
+  sandbag_test:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:

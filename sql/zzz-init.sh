@@ -4,7 +4,7 @@ echo "Start to setup MariaDB."
 
 echo "😪"
 
-sleep 10 #強引にmariadbを眠らせて、wait-for-db-containerが機能しているかみる
+sleep 30 #強引にmariadbを眠らせて、wait-for-db-containerが機能しているかみる
 
 echo "⛄"
 

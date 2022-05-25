@@ -8,7 +8,7 @@ apt-get -y install mariadb-server
 
 echo "🍏"
 
-until mariadb -u $MARIADB_WEB_USER --port $MARIADB_PORT -p$MARIADB_WEB_PASSWORD -D $MARIADB_DATABASE -e 'exit' ; do
+until mariadb -u $MARIADB_WEB_USER --port $MARIADB_PORT -h "mariadb" -p$MARIADB_WEB_PASSWORD -D $MARIADB_DATABASE -e 'exit' ; do
   2>&1 echo "$DB_HOST is unavailable - sleeping"
   sleep 10
 done

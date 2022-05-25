@@ -18,6 +18,12 @@ services:
       - ${MARIADB_PORT}:${MARIADB_PORT}
     networks:
       - datastream
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
   web:
     env_file:
       - .env
@@ -27,7 +33,8 @@ services:
     ports:
       - ${WEB_PORT}:${WEB_PORT}
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     command: ["sh", "./wait-for-db-container.sh"]
     volumes:
       - ./volume/log/web:/usr/src/logger/web

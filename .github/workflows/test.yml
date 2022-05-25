@@ -36,4 +36,4 @@ jobs:
       - name: Wait Database
         run: docker-compose run wait mariadb:3306 -- echo "Database is up"
       - name: Run Tests
-        run: docker-compose run web ./test.sh
+        run: docker-compose exec web bash ./test.sh

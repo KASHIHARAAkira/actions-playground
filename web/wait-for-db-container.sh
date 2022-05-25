@@ -1,20 +1,5 @@
 #!/bin/bash
 
-set -e
-cmd="$@"
-
-apt-get -y update
-apt-get -y install mariadb-server
-
-echo "🍏"
-
-until mariadb -u ${MARIADB_WEB_USER} --host=${DB_HOST} --port=${MARIADB_PORT} -p${MARIADB_WEB_PASSWORD} -e 'exit' ; do
-  2>&1 echo "${DB_HOST} is unavailable - sleeping"
-  sleep 10
-done
-
-  >&2 echo "${DB_HOST} is up"
-
-npm test
-
-exec $cmd
+apt-get update
+apt-get install wait-for-it
+wait-for-it -s -t 60 mariadb:3306 -- npm test

@@ -28,12 +28,10 @@ services:
       - ${WEB_PORT}:${WEB_PORT}
     depends_on:
       - mariadb
-    # command: ["sh", "./wait-for-db-container.sh"]
+    command: ["sh", "./wait-for-db-container.sh"]
     volumes:
       - ./volume/log/web:/usr/src/logger/web
     networks:
       - datastream
-  wait:
-    image: willwill/wait-for-it:latest
 networks:
   datastream:

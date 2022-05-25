@@ -35,7 +35,7 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-    command: ["sh", "./test.sh"]
+    command: ["npm", "test"]
     volumes:
       - ./volume/log/web:/usr/src/logger/web
     networks:

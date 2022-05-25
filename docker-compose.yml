@@ -10,6 +10,8 @@ services:
       - MARIADB_PASSWORD=${MARIADB_WEB_PASSWORD}
       - MARIADB_API_USER=${MARIADB_API_USER}
       - MARIADB_API_PASSWORD=${MARIADB_API_PASSWORD}
+      - MARIADB_PORT=${MARIADB_PORT}
+      - MARIADB_HOST=%
     tty: true
     volumes:
       - ./sql:/docker-entrypoint-initdb.d

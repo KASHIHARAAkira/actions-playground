@@ -10,10 +10,29 @@ services:
       - MARIADB_PASSWORD=${MARIADB_WEB_PASSWORD}
       - MARIADB_API_USER=${MARIADB_API_USER}
       - MARIADB_API_PASSWORD=${MARIADB_API_PASSWORD}
-
     tty: true
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
-      # - ./volume/mariadb:/var/lib/mysql
     ports:
       - ${MARIADB_PORT}:${MARIADB_PORT}
+    depends_on:
+      - web
+    networks:
+      - datastream
+  web:
+    env_file:
+      - .env
+    build:
+      context: ./web/.
+      dockerfile: "Dockerfile"
+    ports:
+      - ${WEB_PORT}:${WEB_PORT}
+    # depends_on:
+    #   - mariadb
+    command: ["sh", "./wait-for-db-container.sh"]
+    volumes:
+      - ./volume/log/web:/usr/src/logger/web
+    networks:
+      - datastream
+networks:
+  datastream:

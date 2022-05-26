@@ -14,14 +14,10 @@ services:
     tty: true
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - ${MARIADB_PORT}:${MARIADB_PORT}
     networks:
       - datastream
-    healthcheck:
-      test: ["CMD", "mysql", "-u${MARIADB_API_USER}", "-p${MARIADB_API_PASSWORD}", "-e", "use ${MARIADB_DATABASE}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s # sleep の分だけ遅延させる
   web:
     env_file:
       - .env
@@ -31,9 +27,8 @@ services:
     ports:
       - ${WEB_PORT}:${WEB_PORT}
     depends_on:
-      mariadb:
-        condition: service_healthy
-    command: ["npm", "test"]
+      - mariadb
+    command: ["sh", "./wait-for-db-container.sh"]
     volumes:
       - ./volume/log/web:/usr/src/logger/web
     networks:

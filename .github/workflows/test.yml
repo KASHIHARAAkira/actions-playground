@@ -22,6 +22,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Shutdown MariaDB
+        run: sudo service mysql stop
 
       - name: Run docker-compose
         shell: bash

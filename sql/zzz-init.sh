@@ -4,7 +4,7 @@ echo "Start to setup MariaDB."
 
 echo "😪"
 
-sleep 30 #強引にmariadbを眠らせて、wait-for-db-containerが機能しているかみる
+sleep 30 #To suspend the initializing forcibly in 30 sec to check the order to start the Node.js service after deploying the MariaDB service.
 
 echo "⛄"
 

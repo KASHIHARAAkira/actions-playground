@@ -17,11 +17,11 @@ services:
     networks:
       - datastream
     healthcheck:
-      test: ["CMD", "mysql", "-u${MARIADB_API_USER}", "-p${MARIADB_API_PASSWORD}", "-e", "use ${MARIADB_DATABASE}"]
+      test: ["CMD", "mariadb", "-u${MARIADB_API_USER}", "-p${MARIADB_API_PASSWORD}", "-e", "use ${MARIADB_DATABASE}"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s # sleep の分だけ遅延させる
+      start_period: 5s
   web:
     env_file:
       - .env

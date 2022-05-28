@@ -23,6 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Shutdown MariaDB
+        run: sudo service mysql stop
+
       - name: Run docker-compose
         shell: bash
         run: |
@@ -30,7 +33,3 @@ jobs:
           docker-compose -v
           docker-compose up --build --abort-on-container-exit
         working-directory: ./
-      # - name: Wait Database
-      #   run: docker-compose run wait mariadb:3306 -- echo "Database is up"
-      # - name: Run Tests
-      #   run: docker-compose run web bash ./test.sh
